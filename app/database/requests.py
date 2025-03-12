@@ -17,11 +17,11 @@ async def get_categories():
         return await session.scalars(select(Category))
 
 
-async def get_category_item(category_id):
+async def get_category_item(category_id: int | str):
     async with async_session() as session:
-        return await session.scalars(select(Item).where(Item.category == category_id))
+        return await session.scalars(select(Item).where(Item.category==int(category_id)))
 
 
-async def get_item(item_id):
+async def get_item(item_id: int | str):
     async with async_session() as session:
-        return await session.scalar(select(Item).where(Item.id == item_id))
+        return await session.scalar(select(Item).where(Item.id==int(item_id)))

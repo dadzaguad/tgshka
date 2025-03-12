@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres_db
+
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    restart: always
+
+
+  bot:
+    build:
+      context: .
+    container_name: tg_bot
+    depends_on:
+      - db
+    environment:
+      - SQLALCHEMY_URL=postgresql+asyncpg://postgres:12345@db:5432/postgres_db
+      - TOKEN=${TOKEN}
+    restart: always
+
