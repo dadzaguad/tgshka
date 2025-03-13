@@ -6,12 +6,14 @@ from dotenv import load_dotenv
 from app.handlers import router
 from app.database.models import init_db, seed_data
 
+TOKEN=os.getenv("TOKEN")
+
+
 
 async def main():
     await init_db()
     await seed_data()
-    load_dotenv()
-    bot = Bot(token=os.getenv("TOKEN"))
+    bot = Bot(token=TOKEN)
     dp = Dispatcher()
     dp.include_router(router)
     await dp.start_polling(bot)

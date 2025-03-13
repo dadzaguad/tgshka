@@ -3,9 +3,9 @@ services:
     image: postgres:latest
     container_name: postgres
     environment:
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres_db
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     volumes:
       - ./db_data:/var/lib/postgresql/data
@@ -21,7 +21,11 @@ services:
     depends_on:
       - db
     environment:
-      - SQLALCHEMY_URL=postgresql+asyncpg://postgres:12345@db:5432/postgres_db
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
       - TOKEN=${TOKEN}
     restart: always
 
