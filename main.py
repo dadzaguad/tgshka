@@ -4,11 +4,12 @@ from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 
 from app.handlers import router
-from app.database.models import init_db
+from app.database.models import init_db, seed_data
 
 
 async def main():
     await init_db()
+    await seed_data()
     load_dotenv()
     bot = Bot(token=os.getenv("TOKEN"))
     dp = Dispatcher()
